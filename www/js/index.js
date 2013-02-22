@@ -16,19 +16,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-function storeToken(token)
-{
-    var xmlhttp = new XMLHttpRequest();
-    console.log("Token to register " + token);
-    xmlhttp.open("GET", "http://192.168.1.186:8180/gcm-demo/register", true);
-    xmlhttp.send("regId="+token+"&message=pushnotificationtester");
-    xmlhttp.onreadystatechange=function() {
-        if (xmlhttp.readyState==4) {
-            //a response now exists in the responseTest property.
-            console.log("Registration response: " + xmlhttp.responseText);
-        }
-    }
-}
 
 var app = {
     // Application Constructor
@@ -58,8 +45,11 @@ var app = {
     },
     // result contains any message sent from the plugin call
     successHandler: function(result) {
-        storeToken(result);
-        alert('Success! Result = '+result)        
+        $.get('http://192.168.1.186:8180/gcm-demo/register?regId='+result,
+            function(data){
+                alert("Registration completed::"+result);
+            }
+        );
     },    
     // Update DOM on a Received Event
     receivedEvent: function(id) {
