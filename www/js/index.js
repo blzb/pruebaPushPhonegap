@@ -45,11 +45,7 @@ var app = {
     },
     // result contains any message sent from the plugin call
     successHandler: function(result) {
-        $.get('http://192.168.1.186:8180/gcm-demo/register?regId='+result,
-            function(data){
-                alert("Registration completed::"+result);
-            }
-        );
+        alert("Registration completed!");
     },    
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -106,7 +102,11 @@ var app = {
                 {
                     // Your GCM push server needs to know the regID before it can push to this device
                     // here is where you might want to send it the regID for later use.
-                    alert('registration id = '+e.regid);
+                    $.get('http://192.168.1.186:8180/gcm-demo/register?regId='+e.regid,
+                        function(data){
+                            alert("regId::"+e.regid);
+                        }
+                        );
                 }
                 break;
 
