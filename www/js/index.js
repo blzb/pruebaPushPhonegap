@@ -37,6 +37,7 @@ var app = {
         app.receivedEvent('deviceready');
     },
     tokenHandler:function(msg) {
+        receivedElement.setAttribute('style', 'display:block;');
         alert("Token Handler " + msg);
     },
     errorHandler:function(error) {
@@ -71,7 +72,7 @@ var app = {
         var receivedElement = parentElement.querySelector('.received');
 
         listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+        
 
         alert('Received Event: ' + id);
     },
