@@ -58,6 +58,7 @@ var app = {
             });
         }
         else {
+            alert("registering device");
             pushNotification.register(this.tokenHandler,this.errorHandler,{
                 "badge":"true",
                 "sound":"true",
