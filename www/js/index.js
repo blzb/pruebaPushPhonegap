@@ -37,10 +37,10 @@ var app = {
         app.receivedEvent('deviceready');
     },
     tokenHandler:function(msg) {
-        console.log("Token Handler " + msg);
+        alert("Token Handler " + msg);
     },
     errorHandler:function(error) {
-        console.log("Error Handler  " + error);
+        alert("Error Handler  " + error);
         alert(error);
     },
     // result contains any message sent from the plugin call
@@ -72,20 +72,20 @@ var app = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
 
-        console.log('Received Event: ' + id);
+        alert('Received Event: ' + id);
     },
     // iOS
     onNotificationAPN: function(event) {
         var pushNotification = window.plugins.pushNotification;
-        console.log("Received a notification! " + event.alert);
-        console.log("event sound " + event.sound);
-        console.log("event badge " + event.badge);
-        console.log("event " + event);
+        alert("Received a notification! " + event.alert);
+        alert("event sound " + event.sound);
+        alert("event badge " + event.badge);
+        alert("event " + event);
         if (event.alert) {
             navigator.notification.alert(event.alert);
         }
         if (event.badge) {
-            console.log("Set badge on  " + pushNotification);
+            alert("Set badge on  " + pushNotification);
             pushNotification.setApplicationIconBadgeNumber(this.successHandler, event.badge);
         }
         if (event.sound) {
