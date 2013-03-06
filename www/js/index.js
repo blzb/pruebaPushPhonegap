@@ -16,7 +16,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 var app = {
     // Application Constructor
     initialize: function() {
@@ -37,58 +36,47 @@ var app = {
         app.receivedEvent('deviceready');
     },
     tokenHandler:function(msg) {
-        receivedElement.setAttribute('style', 'display:block;');
-        alert("Token Handler " + msg);
+        console.log("Token Handler " + msg);
     },
     errorHandler:function(error) {
-        alert("Error Handler  " + error);
+        console.log("Error Handler  " + error);
         alert(error);
     },
     // result contains any message sent from the plugin call
     successHandler: function(result) {
-        alert("Registration completed!");
-    },    
+        alert('Success! Result = '+result)
+    },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        alert(window.plugins);
-        var pushNotification = window.plugins.pushNotification;        
+        var pushNotification = window.plugins.pushNotification;
         // TODO: Enter your own GCM Sender ID in the register call for Android
         if (device.platform == 'android' || device.platform == 'Android') {
-            pushNotification.register(this.successHandler, this.errorHandler,{
-                "senderID":"157854791681",
-                "ecb":"app.onNotificationGCM"
-            });
+            pushNotification.register(this.successHandler, this.errorHandler,{"senderID":"554205989074","ecb":"app.onNotificationGCM"});
         }
         else {
-            alert("registering device");
-            pushNotification.register(this.tokenHandler,this.errorHandler,{
-                "badge":"true",
-                "sound":"true",
-                "alert":"true",
-                "ecb":"app.onNotificationAPN"
-            });
+            pushNotification.register(this.tokenHandler,this.errorHandler,{"badge":"true","sound":"true","alert":"true","ecb":"app.onNotificationAPN"});
         }
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
 
         listeningElement.setAttribute('style', 'display:none;');
-        
+        receivedElement.setAttribute('style', 'display:block;');
 
-        alert('Received Event: ' + id);
+        console.log('Received Event: ' + id);
     },
     // iOS
     onNotificationAPN: function(event) {
         var pushNotification = window.plugins.pushNotification;
-        alert("Received a notification! " + event.alert);
-        alert("event sound " + event.sound);
-        alert("event badge " + event.badge);
-        alert("event " + event);
+        console.log("Received a notification! " + event.alert);
+        console.log("event sound " + event.sound);
+        console.log("event badge " + event.badge);
+        console.log("event " + event);
         if (event.alert) {
             navigator.notification.alert(event.alert);
         }
         if (event.badge) {
-            alert("Set badge on  " + pushNotification);
+            console.log("Set badge on  " + pushNotification);
             pushNotification.setApplicationIconBadgeNumber(this.successHandler, event.badge);
         }
         if (event.sound) {
@@ -105,27 +93,23 @@ var app = {
                 {
                     // Your GCM push server needs to know the regID before it can push to this device
                     // here is where you might want to send it the regID for later use.
-                    $.get('http://192.168.1.186:8180/gcm-demo/register?regId='+e.regid,
-                        function(data){
-                            alert("regId::"+e.regid);
-                        }
-                        );
+                    alert('registration id = '+e.regid);
                 }
-                break;
+            break;
 
             case 'message':
-                // this is the actual push notification. its format depends on the data model
-                // of the intermediary push server which must also be reflected in GCMIntentService.java
-                alert('message = '+e.message+' msgcnt = '+e.msgcnt);
-                break;
+              // this is the actual push notification. its format depends on the data model
+              // of the intermediary push server which must also be reflected in GCMIntentService.java
+              alert('message = '+e.message+' msgcnt = '+e.msgcnt);
+            break;
 
             case 'error':
-                alert('GCM error = '+e.msg);
-                break;
+              alert('GCM error = '+e.msg);
+            break;
 
             default:
-                alert('An unknown GCM event has occurred');
-                break;
+              alert('An unknown GCM event has occurred');
+              break;
         }
     }
 
